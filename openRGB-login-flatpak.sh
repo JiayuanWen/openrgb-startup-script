@@ -6,6 +6,9 @@ newline()
     echo ""
 }
 
+#Helper variables
+SLEEP_TIME=9
+
 #Get flag values
 while getopts c:p:h flag
 do
@@ -76,7 +79,7 @@ then
         echo "$close_openrgb" > "/home/$(logname)/.local/share/openrgb-autostart/close_after.txt"
     fi
 
-    echo "Auto close setting set. Launch the script without any flags to execute."
+    echo "Auto close setting set. Launch the script again without any flags to execute."
     exit 0;
 fi
 if [[ -e "/home/$(logname)/.local/share/openrgb-autostart/close_after.txt" ]]
@@ -84,22 +87,34 @@ then
     CLOSE_AFTER=`cat /home/$(logname)/.local/share/openrgb-autostart/close_after.txt`
 fi
 
-#Run OpenRGB and apply profile
 newline
 echo "Be sure you have flatpak version of OpenRGB installed, or this script will not execute correctly."
 newline
+
+#Run OpenRGB and apply profile
 /usr/bin/flatpak run --branch=stable --arch=x86_64 --command=openrgb org.openrgb.OpenRGB --startminimized --profile $RGB_PROFILE &
-sleep 15;
 
 #If -c flag is set, if T, closes OpenRGB after applying profile, if F, keep OpenRGB open after applying profile.
 #Default to T is -c flag is not set.
-if [[ -n "$CLOSE_AFTER" ]]
+if [[ -n $CLOSE_AFTER ]]
 then
-    if [[ "$CLOSE_AFTER" -eq "T" ]]
+    if [[ $CLOSE_AFTER = "T" ]]
     then
         echo "OpenRGB will close in 15 seconds. To stop this, run the script with \"-c F\" argument"
+        sleep $SLEEP_TIME
+
         flatpak kill org.openrgb.OpenRGB
+        exit 0;
+    else
+        echo "OpenRGB will be kept open. To auto close OpenRGB after script execution, run the script with \"-c T\" argument"
+        sleep $SLEEP_TIME
+        exit 0;
     fi
+else
+    echo "OpenRGB will be kept open. To auto close OpenRGB after script execution, run the script with \"-c T\" argument"
+    sleep $SLEEP_TIME
+    exit 0;
 fi
+
 
 exit 0;
