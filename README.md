@@ -9,7 +9,7 @@ Linux bash script for opening [OpenRGB](https://openrgb.org/), applying an indic
 ## Usage
 #### Change which profile to load
 Tell OpenRGB which RGB profile to load to your PC setup upon script execution.
-* Run ```/path/to/openRGB-login-flatpak.sh -p <profile name>```, no sudo permission needed.
+* Run ```/path/to/openRGB-login-flatpak.sh -p <profile name>```
 * You can then run `/path/to/openRGB-login-flatpak.sh` without any flag to execute the script.
 
 #### Change whether to close OpenRGB after applying a profile
