@@ -6,6 +6,9 @@ Linux bash script for opening [OpenRGB](https://openrgb.org/), applying an indic
 ## Prerequisites
 * Flatpak version of OpenRGB
 
+## Download
+* Download the sh file [here](https://github.com/JiayuanWen/openrgb-startup-script-flatpak/releases)
+
 ## Usage
 #### Change which profile to load
 Tell OpenRGB which RGB profile to load to your PC setup upon script execution.
