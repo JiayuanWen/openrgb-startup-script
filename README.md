@@ -1,5 +1,5 @@
 # openrgb-startup-script-flatpak
-Linux bash script for applying [OpenRGB](https://openrgb.org/) lighting profile on system startup. \
+Linux bash script for applying [OpenRGB](https://openrgb.org/) lighting profile. Can be used as system startup script (Execute upon login). \
 \
 <sup>*Note: This is for flatpak version of OpenRGB. Distro specific version coming soom.</sup>
 
