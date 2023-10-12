@@ -1,5 +1,6 @@
 # OpenRGB startup script
-Linux bash script for applying [OpenRGB](https://openrgb.org/) lighting profiles. Can be used as system startup script (Execute upon login). 
+Linux bash script for applying [OpenRGB](https://openrgb.org/) lighting profiles. Can be used as system startup script (Execute upon login). \
+This is a workaround for OpenRGB's Start At Login not working on some version of the app, such as AppImage or Flatpak.
 
 ## Installation
 See [Wiki](https://github.com/JiayuanWen/openrgb-startup-script/wiki) for installation instructions for your version of OpenRGB.
