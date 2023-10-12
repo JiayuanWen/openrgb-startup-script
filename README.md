@@ -2,7 +2,7 @@
 Linux bash script for applying [OpenRGB](https://openrgb.org/) lighting profiles. Can be used as system startup script (Execute upon login). 
 
 ## Installation
-See [Wiki](https://github.com/JiayuanWen/openrgb-startup-script-flatpak/wiki) for installation instructions for your version of OpenRGB.
+See [Wiki](https://github.com/JiayuanWen/openrgb-startup-script/wiki) for installation instructions for your version of OpenRGB.
 
 ## Usage
 #### Change which profile to load
