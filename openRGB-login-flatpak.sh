@@ -50,8 +50,12 @@ then
     done
     echo "Config flags:"
     echo "  -c    Tell script to close OpenRGB or keep it open after applying preset. Argument: \"T\" or \"F\""
+    echo "      (ex. /path/to/openrgb-login.sh -c T)"
     echo "  -p    Tell script which profile OpenRGB will load after the script launches. Argument: string"
+    echo "      (ex. /path/to/openrgb-login.sh -p \"Red_Breathing\")"
     echo "  -h    Display help. Argument: none"
+    newline
+    echo "  Note: After applying your settings, run the script again without any flags"
     newline
     exit 0;
 fi
@@ -100,18 +104,18 @@ if [[ -n $CLOSE_AFTER ]]
 then
     if [[ $CLOSE_AFTER = "T" ]]
     then
-        echo "OpenRGB will close in 15 seconds. To stop this, run the script with \"-c F\" argument"
+        echo "OpenRGB will close in 15 seconds. To stop this, set auto-close to False with \"-c F\" argument (Be sure to run the script again without any flags)"
         sleep $SLEEP_TIME
 
         flatpak kill org.openrgb.OpenRGB
         exit 0;
     else
-        echo "OpenRGB will be kept open. To auto close OpenRGB after script execution, run the script with \"-c T\" argument"
+        echo "OpenRGB will be kept open. To auto close OpenRGB after script execution, with \"-c T\" argument (Be sure to run the script again without any flags)"
         sleep $SLEEP_TIME
         exit 0;
     fi
 else
-    echo "OpenRGB will be kept open. To auto close OpenRGB after script execution, run the script with \"-c T\" argument"
+    echo "OpenRGB will be kept open. To auto close OpenRGB after script execution, run the script with \"-c T\" argument (Be sure to run the script again without any flags)"
     sleep $SLEEP_TIME
     exit 0;
 fi
