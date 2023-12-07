@@ -22,3 +22,4 @@ If set to true, OpenRGB will close itself after applying a profile, otherwise it
 You can set the script to execute on login. \
 The steps depend on your desktop environment (Plasma, GNOME, Cinnamon, Mate...), so you will have to search it up how to setup login scripts for your DE. 
 Just be sure the path to script is ```/path/to/openRGB-login.sh``` when asked.
+
