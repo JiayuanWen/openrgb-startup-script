@@ -25,21 +25,34 @@ do
     esac
 done
 
-#Check if config folder exist
-if [ ! -d /home/$(logname)/.local/share/openrgb-autostart/ ]
+#Check if OpenRGB folder exist locally
+if [ ! -d "/home/$(logname)/.config/OpenRGB/" ]
 then
-    mkdir "/home/$(logname)/.local/share/openrgb-autostart"
+    mkdir "/home/$(logname)/.config/OpenRGB/"
+fi
+
+#Check if config folder exist
+if [ ! -d "/home/$(logname)/.config/OpenRGB/autostart/" ]
+then
+    mkdir "/home/$(logname)/.config/OpenRGB/autostart/"
 fi
 
 #Check if config files exist
-if [ ! -e /home/$(logname)/.local/share/openrgb-autostart/close_after.txt ]
+CONFIG_FILE="/home/$(logname)/.config/OpenRGB/autostart/autostart_config"
+if [ ! -e $CONFIG_FILE ]
 then
-    touch "/home/$(logname)/.local/share/openrgb-autostart/close_after.txt"
+    touch $CONFIG_FILE
+    cat <<EOF > $CONFIG_FILE
+#This is the config file read by OpenRGB autostart script. You may manually change the settings here, or change it via the autostart script (see: https://github.com/JiayuanWen/openrgb-startup-script?tab=readme-ov-file#usage)
+
+#This setting determines the lighting profile OpenRGB will open
+openrgb_autostart_profile=none
+
+#This setting tells script rather to close OpenRGB after opening lighting profile
+openrgb_autostart_close_after=T
+EOF
 fi
-if [ ! -e /home/$(logname)/.local/share/openrgb-autostart/profile.txt ]
-then
-    touch "/home/$(logname)/.local/share/openrgb-autostart/profile.txt"
-fi
+source $CONFIG_FILE #See "/home/<username>/.config/OpenRGB/autostart/autostart_config" for all variables that will be used later in the script
 
 #Display help if -h flag
 if [ "$display_help" = true ]
@@ -63,37 +76,37 @@ fi
 #Save profile name set by -p flag
 if [ -n "$rgb_profile" ]
 then
-    echo "$rgb_profile" > "/home/$(logname)/.local/share/openrgb-autostart/profile.txt"
+    sed -i "s/^openrgb_autostart_profile=.*/openrgb_autostart_profile=$rgb_profile/" $CONFIG_FILE
 
     echo "Color profile set. Launch the script without any flags to execute."
     exit 0;
 fi
-if [[ -e "/home/$(logname)/.local/share/openrgb-autostart/profile.txt" ]]
+
+if [[ -e $CONFIG_FILE ]]
 then
-    RGB_PROFILE=`cat /home/$(logname)/.local/share/openrgb-autostart/profile.txt`
+    RGB_PROFILE="$openrgb_autostart_profile"
 fi
 
-#Save settings set by -c flag
-if [[ -n "$close_openrgb" ]]
+#Save auto-close settings set by -c flag
+if [ -n "$close_openrgb" ]
 then
-    if [[ "$close_openrgb" -ne "T" ]] || [[ "$close_openrgb" -ne "F" ]]
+    if [[ "$close_openrgb" == "T" ]] || [[ "$close_openrgb" == "F" ]]
     then
-        echo "T" > "/home/$(logname)/.local/share/openrgb-autostart/close_after.txt"
+        sed -i "s/^openrgb_autostart_close_after=.*/openrgb_autostart_close_after=$close_openrgb/" $CONFIG_FILE
+        echo "Auto close setting set. Launch the script again without any flags to execute."
     else
-        echo "$close_openrgb" > "/home/$(logname)/.local/share/openrgb-autostart/close_after.txt"
+        echo "Auto close setting must be "T" or "F". Setting not set."
+        exit 1;
     fi
 
-    echo "Auto close setting set. Launch the script again without any flags to execute."
     exit 0;
 fi
-if [[ -e "/home/$(logname)/.local/share/openrgb-autostart/close_after.txt" ]]
-then
-    CLOSE_AFTER=`cat /home/$(logname)/.local/share/openrgb-autostart/close_after.txt`
+
+if [[ -e $CONFIG_FILE ]]
+then 
+    CLOSE_AFTER="$openrgb_autostart_close_after"
 fi
 
-newline
-echo "Be sure you have flatpak version of OpenRGB installed, or this script will not execute correctly."
-newline
 
 #Run OpenRGB and apply profile
 openrgb --startminimized --profile $RGB_PROFILE &
