@@ -96,17 +96,6 @@ if [[ -e $CONFIG_FILE ]]
 then
     APPIMAGE_LOC="$openrgb_autostart_apploc"
 fi
-# if [ -n "$app_loc" ]
-# then
-#     echo "$app_loc" > "/home/$(logname)/.local/share/openrgb-autostart/apploc.txt"
-
-#     echo "AppImage location set. Launch the script without any flags to execute."
-#     exit 0;
-# fi
-# if [[ -e "/home/$(logname)/.local/share/openrgb-autostart/apploc.txt" ]]
-# then
-#     APPIMAGE_LOC=`cat /home/$(logname)/.local/share/openrgb-autostart/apploc.txt`
-# fi
 
 #Save profile name set by -p flag
 if [ -n "$rgb_profile" ]
